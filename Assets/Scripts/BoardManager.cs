@@ -32,6 +32,7 @@ public class BoardManager : MonoBehaviour {
 
     private Transform boardHolder;
     private List<Vector3> gridPositions = new List<Vector3>();
+    private List<GameObject> listObjects = new List<GameObject>();
 
     void InitialiseList()
     {
@@ -40,7 +41,7 @@ public class BoardManager : MonoBehaviour {
         {
             for (int y = 1; y < length -1; y++ )
             {
-                gridPositions.Add(new Vector3(x, y, 0));
+                gridPositions.Add(new Vector3(x, 1, y));
             }
         }
     }
@@ -61,6 +62,7 @@ public class BoardManager : MonoBehaviour {
 
                 GameObject instance = Instantiate(toInstantiate, new Vector3(x, 0f, y), Quaternion.identity) as GameObject;
                 instance.transform.SetParent(boardHolder);
+                listObjects.Add(instance);
             }
         }
     }
@@ -81,7 +83,7 @@ public class BoardManager : MonoBehaviour {
         {
             Vector3 randomPosition = RandomPosition();
             GameObject tileChoice = tileArray[Random.Range(0, tileArray.Length)];
-            Instantiate(tileChoice, randomPosition, Quaternion.Euler(-90, 0, 0));
+            Instantiate(tileChoice, randomPosition, Quaternion.identity);
         }
     }
 
@@ -91,5 +93,15 @@ public class BoardManager : MonoBehaviour {
         InitialiseList();
         LayoutObjectAtRandom(trees, treeCount.minimun, treeCount.maximun);
         LayoutObjectAtRandom(rocks, rockCount.minimun, rockCount.maximun);
+    }
+
+    public void ResetScene()
+    {
+        //BoardClean();
+        for (int i = 0; i < listObjects.Count -1; i++)
+        {
+            
+        }
+        SetUpScene();
     }
 }
