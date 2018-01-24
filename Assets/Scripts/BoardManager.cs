@@ -19,16 +19,20 @@ public class BoardManager : MonoBehaviour {
         }
     }
 
-    public int width = 10;
-    public int length = 10;
+    public int width = 100;
+    public int length = 100;
 
     public Count treeCount = new Count(1,3);
     public Count rockCount = new Count(5,9);
-    
+    public Count cabaneCount = new Count(0, 2);
+
     public GameObject[] borders;
     public GameObject[] floors;
+
+
     public GameObject[] rocks;
     public GameObject[] trees;
+    public GameObject[] cabanes;
 
     private Transform boardHolder;
     private List<Vector3> gridPositions = new List<Vector3>();
@@ -83,7 +87,8 @@ public class BoardManager : MonoBehaviour {
         {
             Vector3 randomPosition = RandomPosition();
             GameObject tileChoice = tileArray[Random.Range(0, tileArray.Length)];
-            Instantiate(tileChoice, randomPosition, Quaternion.identity);
+            GameObject instance = Instantiate(tileChoice, randomPosition, Quaternion.identity) as GameObject;
+            listObjects.Add(instance);
         }
     }
 
@@ -93,6 +98,7 @@ public class BoardManager : MonoBehaviour {
         InitialiseList();
         LayoutObjectAtRandom(trees, treeCount.minimun, treeCount.maximun);
         LayoutObjectAtRandom(rocks, rockCount.minimun, rockCount.maximun);
+        LayoutObjectAtRandom(cabanes, cabaneCount.minimun, cabaneCount.maximun);
     }
 
     public void ResetScene()
@@ -100,7 +106,7 @@ public class BoardManager : MonoBehaviour {
         //BoardClean();
         for (int i = 0; i < listObjects.Count -1; i++)
         {
-            
+            Destroy(listObjects[i]);
         }
         SetUpScene();
     }
